@@ -1,6 +1,6 @@
 import openai
 import asyncio
-from typing import List, Dict, Any
+from typing import List, Dict, Any, Union
 from contextlib import AsyncExitStack
 from mcp import ClientSession, StdioServerParameters
 from mcp.client.stdio import stdio_client
@@ -14,10 +14,13 @@ async def get_chat_completion_with_mcp(
     messages: list[dict[str, str]], 
     client: openai.AsyncOpenAI, 
     model_id: str="gpt-4o-mini", 
-    mcp_servers: List[StdioServerParameters]=[]
-) -> openai.types.completion.Completion:
+    mcp_servers: Union[List[StdioServerParameters], StdioServerParameters, Any]=None
+) -> Union[openai.types.completion.Completion, openai.types.chat.chat_completion.ChatCompletion]:
 
-    if len(mcp_servers) == 0 or not isinstance(mcp_servers, list):
+    if isinstance(mcp_servers, StdioServerParameters):
+        mcp_servers = [mcp_servers]
+
+    if not isinstance(mcp_servers, list) or len(mcp_servers) == 0:
         if not isinstance(mcp_servers, list):
             logger.warning("mcp_servers is not a list, it's a %s", type(mcp_servers))
 
