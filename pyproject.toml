@@ -1,0 +1,21 @@
+[project]
+name = "oai-llm"
+version = "1.0.0"
+description = "Enable Openai LLM interact with anthropic model context protocol (MCP) standard"
+authors = [
+    {name = "tndo", email = "dotrann.1412@gmail.com"},
+]
+
+dependencies = [
+    "mcp[cli]",
+    "openai"
+]
+
+requires-python = ">=3.8"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/oai_mcp"]

@@ -1,0 +1,1 @@
+from .oai_mcp import get_chat_completion_with_mcp
